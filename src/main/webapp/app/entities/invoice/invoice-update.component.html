@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-invoice-heading">Create or edit a Invoice</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!invoice.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="invoice.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_itemCount">Item Count</label>
+                    <input type="number" class="form-control" name="itemCount" id="field_itemCount"
+                        [(ngModel)]="invoice.itemCount" required/>
+                    <div [hidden]="!(editForm.controls.itemCount?.dirty && editForm.controls.itemCount?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.itemCount?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.itemCount?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_subTotal">Sub Total</label>
+                    <input type="number" class="form-control" name="subTotal" id="field_subTotal"
+                        [(ngModel)]="invoice.subTotal" required/>
+                    <div [hidden]="!(editForm.controls.subTotal?.dirty && editForm.controls.subTotal?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.subTotal?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.subTotal?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_client">Client</label>
+                    <select class="form-control" id="field_client" name="client" [(ngModel)]="invoice.clientId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackClientById">{{clientOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_discount">Discount</label>
+                    <select class="form-control" id="field_discount" name="discount" [(ngModel)]="invoice.discountId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="discountOption.id" *ngFor="let discountOption of discounts; trackBy: trackDiscountById">{{discountOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

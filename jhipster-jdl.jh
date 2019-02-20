@@ -1,0 +1,52 @@
+entity Client {
+    id Long required,
+	name String required
+}
+
+entity Address {
+	streetAddress String required,
+    postalCode String,
+    city String
+}
+
+entity Telephone {
+    number Long required
+}
+
+entity Invoice {
+	itemCount Long required,
+    subTotal Double required
+}
+
+entity Discount {
+	value Double required
+}
+
+relationship OneToMany {
+	Client{addresses} to Address
+}
+
+relationship OneToMany {
+	Client{telephones} to Telephone
+}
+
+relationship OneToMany {
+	Client{invoices} to Invoice
+}
+
+relationship OneToOne {
+	Invoice{discount} to Discount
+}
+
+// Set pagination options
+paginate Client with infinite-scroll
+paginate Invoice with pagination
+
+// Use Data Transfert Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

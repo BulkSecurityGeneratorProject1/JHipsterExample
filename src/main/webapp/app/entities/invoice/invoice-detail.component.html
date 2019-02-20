@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="invoice">
+            <h2><span>Invoice</span> {{invoice.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Item Count</span></dt>
+                <dd>
+                    <span>{{invoice.itemCount}}</span>
+                </dd>
+                <dt><span>Sub Total</span></dt>
+                <dd>
+                    <span>{{invoice.subTotal}}</span>
+                </dd>
+                <dt><span>Client</span></dt>
+                <dd>
+                    <div *ngIf="invoice.clientId">
+                        <a [routerLink]="['/client', invoice.clientId, 'view']">{{invoice.clientId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Discount</span></dt>
+                <dd>
+                    <div *ngIf="invoice.discountId">
+                        <a [routerLink]="['/discount', invoice.discountId, 'view']">{{invoice.discountId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/invoice', invoice.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
